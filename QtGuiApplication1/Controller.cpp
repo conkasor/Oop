@@ -27,18 +27,21 @@ std::string Controller::undo() {
 	}
 	int c = size();
 	std::string st=undoActions.back()->doUndo();
+	//wishList.notifyObservers(st);
+	undoActions.pop_back();
+	notifyObservers();
 	if (c > size()) {
 		for (int i=0;i<wishList.size();i++)
 			try {
+			wishList.notifyObservers(st);
 			wishList.DeleteWishListOffer(Oferta(st));
 			i--;
 		}
 		catch (exception) {};
 		}
-	wishList.notifyObservers(st);
+	
 	
 
-	undoActions.pop_back();
 	
 	return st;
 }

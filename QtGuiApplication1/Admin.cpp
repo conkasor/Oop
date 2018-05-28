@@ -236,6 +236,7 @@ void Admin::populateAll() {
 }
 void Admin::doUndo() {
 	try {
+		
 		std::string st = ctrl.undo();
 		l1->clear();
 		populateAll();
@@ -243,9 +244,15 @@ void Admin::doUndo() {
 			l1->findItems(QString::fromStdString(st), Qt::MatchCaseSensitive).at(0)->setBackgroundColor(200);
 		statusBar->showMessage("Undo executed succesfully!");
 	}
-	catch (RepoException& e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
-	catch (ValidateException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
-	catch (CtrlException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); };
+	catch (RepoException& e) { statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+	populateAll();
+	}
+	catch (ValidateException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+	populateAll();
+	}
+	catch (CtrlException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+	populateAll();
+	};
 }
 void Admin::toHtml() {
 	std::vector<Oferta> v;

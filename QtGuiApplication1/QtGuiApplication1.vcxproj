@@ -137,10 +137,10 @@
     <QtRcc Include="QtGuiApplication1.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Controller.h" />
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Oferta.h" />
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\repo.h" />
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="undo.h" />
     <ClInclude Include="ViewWishList.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia</IncludePath>

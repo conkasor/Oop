@@ -111,9 +111,6 @@
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Controller.h">
-      <Filter>Header Files\app</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -127,6 +124,9 @@
       <Filter>Header Files\app</Filter>
     </ClInclude>
     <ClInclude Include="undo.h">
+      <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
   </ItemGroup>
