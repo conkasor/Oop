@@ -60,9 +60,6 @@
     <ClCompile Include="Ui.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\undo.h">
-      <Filter>Header Files\app</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\repoo.cpp">
       <Filter>Source Files\app</Filter>
     </ClCompile>
@@ -127,6 +124,9 @@
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="WishList.h">
+      <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="undo.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
   </ItemGroup>

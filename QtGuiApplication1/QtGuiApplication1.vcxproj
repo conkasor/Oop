@@ -140,8 +140,8 @@
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Controller.h" />
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Oferta.h" />
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\repo.h" />
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\undo.h" />
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.h" />
+    <ClInclude Include="undo.h" />
     <ClInclude Include="ViewWishList.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB</Define>

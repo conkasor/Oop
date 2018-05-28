@@ -25,7 +25,7 @@ void Ui::start()
 
 void Ui::connects() {
 	QObject::connect(welcome.clientMenu, &QPushButton::clicked, [this]() {
-		//adaugam observere pt ctrl,wish si intre ele
+		//adaugam observere pt repo,wish si intre ele
 		auto cl =new ClientMenu(ctrl);
 		ctrl.addObserver(cl);
 		ctrl.addWishObserver(cl);

@@ -2,6 +2,7 @@
 #include "Oferta.h"
 #include "repo.h"
 #include <string>
+#include<Controller.h>
 class ActiuneUndo {
 public:
 	virtual std::string doUndo() = 0;
@@ -11,11 +12,12 @@ public:
 
 class UndoAdauga : public ActiuneUndo {
 	Oferta ofertaAdaugata;
-	Repo& rep;
+	Repo& repo;
 public:
-	UndoAdauga(Repo& rep, const  Oferta& p) :rep{ rep }, ofertaAdaugata{ p } {}
+	UndoAdauga(Repo& rep, const  Oferta& p) :repo{ rep }, ofertaAdaugata{ p } {}
 	std::string doUndo() override {
-		rep.delt3(ofertaAdaugata);
+		repo.delt3(ofertaAdaugata);
+		
 		return ofertaAdaugata.getName();
 
 	}
@@ -23,11 +25,11 @@ public:
 
 class UndoSterge : public ActiuneUndo {
 	Oferta ofertaStearsa;
-	Repo& rep;
+	Repo& repo;
 public:
-	UndoSterge(Repo& rep, const  Oferta& p) :rep{ rep }, ofertaStearsa{ p } {}
+	UndoSterge(Repo& rep, const  Oferta& p) :repo{ rep }, ofertaStearsa{ p } {}
 	std::string doUndo() override {
-		rep.store(ofertaStearsa);
+		repo.store(ofertaStearsa);
 		return ofertaStearsa.getName();
 
 	}
@@ -35,11 +37,11 @@ public:
 
 class UndoChange : public ActiuneUndo {
 	Oferta ofertaChanged;
-	Repo& rep;
+	Repo& repo;
 public:
-	UndoChange(Repo& rep, const  Oferta& p) :rep{ rep }, ofertaChanged{ p } {}
+	UndoChange(Repo& rep, const  Oferta& p) :repo{ rep }, ofertaChanged{ p } {}
 	std::string doUndo() override {
-		rep.change(ofertaChanged);
+		repo.change(ofertaChanged);
 		return ofertaChanged.getName();
 	}
 };

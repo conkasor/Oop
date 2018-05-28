@@ -25,10 +25,21 @@ std::string Controller::undo() {
 	if (undoActions.empty()) {
 		throw CtrlException{ "Nu mai exista operatii" };
 	}
-	
+	int c = size();
 	std::string st=undoActions.back()->doUndo();
+	if (c > size()) {
+		for (int i=0;i<wishList.size();i++)
+			try {
+			wishList.DeleteWishListOffer(Oferta(st));
+			i--;
+		}
+		catch (exception) {};
+		}
+	wishList.notifyObservers(st);
+	
+
 	undoActions.pop_back();
-	notifyObservers(st);
+	
 	return st;
 }
 
