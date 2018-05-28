@@ -63,26 +63,26 @@
     <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\undo.h">
       <Filter>Header Files\app</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\Oferta.cpp">
-      <Filter>Source Files\app</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\repoo.cpp">
       <Filter>Source Files\app</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.cpp">
       <Filter>Source Files\app</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files\app</Filter>
     </ClCompile>
-    <ClCompile Include="WishList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ViewWishList.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Source Files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="Oferta.cpp">
+      <Filter>Source Files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="WishList.cpp">
+      <Filter>Source Files\app</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +114,6 @@
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\WishList.h">
-      <Filter>Header Files\app</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Controller.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
@@ -124,10 +121,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\app</Filter>
     </ClInclude>
     <ClInclude Include="ViewWishList.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="WishList.h">
+      <Filter>Header Files\app</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

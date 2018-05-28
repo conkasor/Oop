@@ -113,7 +113,6 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\Oferta.cpp" />
     <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\repoo.cpp" />
     <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.cpp" />
     <ClCompile Include="Admin.cpp" />
@@ -122,6 +121,7 @@
     <ClCompile Include="Greetings.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="Oferta.cpp" />
     <ClCompile Include="QtGuiApplication1.cpp" />
     <ClCompile Include="Ui.cpp" />
     <ClCompile Include="ViewWishList.cpp" />
@@ -142,13 +142,13 @@
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\repo.h" />
     <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\undo.h" />
     <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.h" />
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\WishList.h" />
     <ClInclude Include="ViewWishList.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB</Define>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB</Define>
     </ClInclude>
+    <ClInclude Include="WishList.h" />
     <QtMoc Include="Admin.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB</Define>

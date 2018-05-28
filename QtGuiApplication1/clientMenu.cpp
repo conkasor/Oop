@@ -5,6 +5,7 @@
 #include "Controller.h"
 #include "qurl.h"
 #include <qdesktopservices.h>
+#include "ViewWishList.h"
 void ClientMenu::exit()
 {
 }
@@ -53,11 +54,11 @@ void ClientMenu::connects()
 
 
 	connect(l2,&QListWidget::doubleClicked,[this](){
-		Oferta of = ctrl.get(l2->currentItem()->text().toStdString());
+		Oferta& of = ctrl.get(l2->currentItem()->text().toStdString());
 		add(of,l1);
 		ctrl.wishList.AddToWishList(of);
-		update();
-		notifyObservers();
+		update(of.getName());
+		notifyObservers(of.getName());
 
 
 	});
@@ -65,11 +66,11 @@ void ClientMenu::connects()
 		try {
 			if (!l2->currentItem())
 				throw(CtrlException("Nu ati selectat oferta pe care sa o adaugati in wishlist"));
-			Oferta of = ctrl.get(l2->currentItem()->text().toStdString());
+			Oferta& of = ctrl.get(l2->currentItem()->text().toStdString());
 			add(of, l1);
 			ctrl.wishList.AddToWishList(of);
-			update();
-			notifyObservers();
+			update(of.getName());
+			notifyObservers(of.getName());
 
 
 		}
@@ -82,14 +83,14 @@ void ClientMenu::connects()
 		try {
 			if (!l1->currentItem())
 				throw(CtrlException("Nu ati selectat Offer wishlist"));
-			Oferta of = ctrl.get(l1->currentItem()->text().toStdString());
+			Oferta& of = ctrl.get(l1->currentItem()->text().toStdString());
 			ctrl.wishList.DeleteWishListOffer(of);
 			l1->clear();
 			std::vector<Oferta> v;
 			ctrl.wishList.getAll(v);
 			populateFromVector(l1, v);
-			update();
-			notifyObservers();
+			update(of.getName());
+			notifyObservers(of.getName());
 
 
 			
@@ -102,12 +103,12 @@ void ClientMenu::connects()
 	});
 	connect(l1, &QListWidget::doubleClicked, [this]() {
 		try {
-		Oferta of = ctrl.get(l1->currentItem()->text().toStdString());
+		Oferta& of = ctrl.get(l1->currentItem()->text().toStdString());
 		ctrl.wishList.DeleteWishListOffer(of);
 		std::vector<Oferta> v;
 		ctrl.wishList.getAll(v);
-		update();
-		notifyObservers();
+		update(of.getName());
+		notifyObservers(of.getName());
 
 
 		}
@@ -121,7 +122,6 @@ void ClientMenu::connects()
 		generate();
 		currentNrLabel->setText(QString::number(ctrl.wishList.size()));
 		update();
-		notifyObservers();
 
 
 	});
@@ -131,7 +131,6 @@ void ClientMenu::connects()
 		else {
 			deleteAll();
 			notifyObservers();
-			update();
 
 		
 		}});
@@ -160,13 +159,12 @@ void ClientMenu::generate() {
 	std::vector<Oferta> v;
 	ctrl.getAll(v);
 	ctrl.wishList.RandomAddWishList(v, slider->value());
-	v.clear();
-	ctrl.wishList.getAll(v);
-	populateFromVector(l1, v);
+	update();
 }
 void ClientMenu::deleteAll() {
 	l1->clear();
 	ctrl.wishList.EmptyWishList();
+	update();
 }
 
 void ClientMenu::exportHtml()
@@ -191,7 +189,7 @@ void ClientMenu::exportHtml()
 	statusLabel->setText("Html export executed succesfully!");
 }
 
-void ClientMenu::update()
+void ClientMenu::update(std::string name)
 {
 	std::vector<Oferta> v;
 	ctrl.wishList.getAll(v);
@@ -201,6 +199,14 @@ void ClientMenu::update()
 	populateFromVector(l2,v);
 	currentNrLabel->setText(QString::number(ctrl.wishList.size()));
 	slider->setRange(1, ctrl.size());
-
+	notifyViewOnly(name);
 	
+}
+
+void ClientMenu::notifyViewOnly(std::string name)
+{
+	for (auto el:observers) {
+		if (typeid(this) != typeid(el))
+			el->update(name);
+	}
 }

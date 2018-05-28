@@ -10,12 +10,15 @@ void WishList::EmptyWishList() {
 		std::vector<string> v;
 		auto temp = wishList.erase(wishList.begin());
 		v.push_back(of.getName());
-		notifyObservers();
+
+		
 	}
+	notifyObservers();
+	
 }
 //Adauga la wishList oferta primita ca parametru
 void WishList::AddToWishList(const Oferta& of) {
-	try { wishList.emplace_back(of); notifyObservers(); }
+	try { wishList.emplace_back(of); notifyObservers(of.getName()); }
 	catch (RepoException& ex) {
 		cout << ex;
 	}
@@ -27,7 +30,7 @@ void WishList::DeleteWishListOffer(const Oferta& of) {
 	if (it != wishList.end())
 	{
 		auto temp = wishList.erase(it);
-		notifyObservers();
+		notifyObservers(of.getName());
 		return;
 	}
 	throw CtrlException("Nu exista aceasta oferta pentru a fi stearsa");
@@ -51,8 +54,9 @@ void WishList::AddWishListOffer(std::vector<Oferta> filtrat) {
 	
 	for (auto of : filtrat) {
 		wishList.emplace_back(of);
+		notifyObservers(of.getName());
 	}
-	notifyObservers();
+	
 }
 //Populeaza Wishlistul cu un nr. dat ca parametru de oferte random din repo;
 void WishList::RandomAddWishList(std::vector<Oferta> all,const unsigned int nr) {
@@ -66,8 +70,9 @@ void WishList::RandomAddWishList(std::vector<Oferta> all,const unsigned int nr) 
 		const int rndNr = dist(mt);
 		auto el = all[rndNr];
 		wishList.push_back(el);
+		notifyObservers(el.getName());
 	}
-	notifyObservers();
+	
 }
 
 void WishList::getAll(std::vector<Oferta>& v) {

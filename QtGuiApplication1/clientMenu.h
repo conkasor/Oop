@@ -58,6 +58,7 @@ public:
 	void generate();
 	void deleteAll();
 	void exportHtml();
-	void update() override;
+	void update(std::string name="") override;
+	void notifyViewOnly(std::string name="");
 };
 

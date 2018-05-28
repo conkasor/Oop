@@ -18,7 +18,7 @@ void Controller::add(const string & name, const string & dest, const string & ti
 	val.validate(of);
 	repo.store(of);
 	undoActions.push_back(std::make_unique<UndoAdauga>(repo, of));
-	notifyObservers();
+	notifyObservers(name);
 }
 
 std::string Controller::undo() {
@@ -28,7 +28,7 @@ std::string Controller::undo() {
 	
 	std::string st=undoActions.back()->doUndo();
 	undoActions.pop_back();
-	notifyObservers();
+	notifyObservers(st);
 	return st;
 }
 
@@ -46,7 +46,7 @@ void Controller::del(const string & name)
 	}
 	catch (CtrlException) {}
 	undoActions.push_back(std::make_unique<UndoSterge>(repo, of));
-	notifyObservers();
+	notifyObservers(name);
 
 }
 //modifica elementul din wishlist si repo la nivel controller
@@ -64,7 +64,7 @@ void Controller::change(const string & name,const string & dest,const string & t
 	}
 	catch (CtrlException){}
 	undoActions.push_back(std::make_unique<UndoChange>(repo, ofv));
-	notifyObservers();
+	notifyObservers(name);
 
 }
 
