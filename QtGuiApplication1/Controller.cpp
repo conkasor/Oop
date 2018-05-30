@@ -29,17 +29,17 @@ std::string Controller::undo() {
 	std::string st=undoActions.back()->doUndo();
 	//wishList.notifyObservers(st);
 	undoActions.pop_back();
-	notifyObservers();
+	notifyObservers(st);
 	if (c > size()) {
-		for (int i=0;i<wishList.size();i++)
+		for (int i = 0; i < wishList.size(); i++)
 			try {
-			wishList.notifyObservers(st);
 			wishList.DeleteWishListOffer(Oferta(st));
 			i--;
 		}
-		catch (exception) {};
-		}
-	
+		catch (CtrlException) {};
+	}
+	wishList.notifyObservers(st);
+
 	
 
 	
@@ -58,7 +58,7 @@ void Controller::del(const string & name)
 			wishList.DeleteWishListOffer(of);
 
 	}
-	catch (CtrlException) {}
+	catch (CtrlException) {};
 	undoActions.push_back(std::make_unique<UndoSterge>(repo, of));
 	notifyObservers(name);
 
@@ -76,7 +76,7 @@ void Controller::change(const string & name,const string & dest,const string & t
 		wishList.ChangeWishListOffer(of);
 
 	}
-	catch (CtrlException){}
+	catch (CtrlException) {};
 	undoActions.push_back(std::make_unique<UndoChange>(repo, ofv));
 	notifyObservers(name);
 

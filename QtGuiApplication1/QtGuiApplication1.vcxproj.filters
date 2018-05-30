@@ -81,6 +81,9 @@
     <ClCompile Include="WishList.cpp">
       <Filter>Source Files\app</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QtGuiApplication1.ui">
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

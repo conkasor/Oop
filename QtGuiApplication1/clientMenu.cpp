@@ -6,6 +6,7 @@
 #include "qurl.h"
 #include <qdesktopservices.h>
 #include "ViewWishList.h"
+#include "Model.h"
 void ClientMenu::exit()
 {
 }

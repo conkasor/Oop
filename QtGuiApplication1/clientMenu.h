@@ -17,6 +17,7 @@
 #include "wishList.h"
 #include "qslider.h"
 #include "Observer.h"
+#include "Model.h"
 
 
 class ClientMenu: public QWidget,public Observer,public Observable

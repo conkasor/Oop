@@ -32,10 +32,6 @@ void Ui::connects() {
 		cl->exec();
 		cl->update();
 		clients.push_back(cl); 
-		//adaugam observere la read only
-		if (clients.size()==1)
-		for (auto& v : views)
-			cl->addObserver(v);
 	});
 
 
@@ -44,8 +40,7 @@ void Ui::connects() {
 
 	QObject::connect(welcome.clientViewOnlyMenu,&QPushButton::clicked,[this](){
 		auto v = new ViewWishList(ctrl.wishList);
-		if (clients.size()>=1)
-		clients[0]->addObserver(v);
+		ctrl.wishList.addObserver(v);
 		v->exec();
 		views.push_back(v);
 	});
