@@ -19,9 +19,8 @@
 #include "Observer.h"
 #include "Model.h"
 
-
-class ClientMenu: public QWidget,public Observer,public Observable
-{	
+class ClientMenu : public QWidget, public Observer, public Observable
+{
 	Controller& ctrl;
 	QWidget* wstatus = new QWidget();
 	QWidget* client = new QWidget();
@@ -38,9 +37,8 @@ class ClientMenu: public QWidget,public Observer,public Observable
 	QListWidget *l2 = new QListWidget(wfrow);
 	QHBoxLayout* trow = new QHBoxLayout(wtrow);
 
-	
 public:
-	ClientMenu (Controller& ctrl) :ctrl{ ctrl } {};
+	ClientMenu(Controller& ctrl) :ctrl{ ctrl } {};
 	QPushButton * wantB = new QPushButton("<<Want", wbtns);
 	QLabel* currentNrLabel = new QLabel("0", wbtns);
 	QPushButton *dWantB = new QPushButton(">>Don't want", wbtns);
@@ -50,7 +48,6 @@ public:
 	QPushButton *generateB = new QPushButton("Generate 1", wsrow);
 	QPushButton *exportToHtml = new QPushButton("Export Html", wsrow);
 
-
 	void exit();
 	void exec();
 	void connects();
@@ -59,7 +56,6 @@ public:
 	void generate();
 	void deleteAll();
 	void exportHtml();
-	void update(std::string name="") override;
-	void notifyViewOnly(std::string name="");
+	void update(std::string name = "") override;
+	void notifyViewOnly(std::string name = "");
 };
-

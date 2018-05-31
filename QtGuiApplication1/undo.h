@@ -17,9 +17,8 @@ public:
 	UndoAdauga(Repo& rep, const  Oferta& p) :repo{ rep }, ofertaAdaugata{ p } {}
 	std::string doUndo() override {
 		repo.delt3(ofertaAdaugata);
-		
-		return ofertaAdaugata.getName();
 
+		return ofertaAdaugata.getName();
 	}
 };
 
@@ -31,7 +30,6 @@ public:
 	std::string doUndo() override {
 		repo.store(ofertaStearsa);
 		return ofertaStearsa.getName();
-
 	}
 };
 

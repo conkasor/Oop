@@ -19,14 +19,13 @@
 
 void Admin::exec()
 {
-	
 	//general menu
 	menu->addWidget(statusBar);
 	menu->addWidget(l1);
 	buttons->addWidget(sortCB);
-	
+
 	filterForm->addWidget(filterCB);
-	
+
 	filterForm->addWidget(filterEdit);
 	buttons->addWidget(wFilterForm);
 	buttons->addWidget(undoB);
@@ -40,8 +39,6 @@ void Admin::exec()
 	buttons->addWidget(exportHtmlB);	menu->addWidget(wButtons); menu->addWidget(wImpExp); menu->addWidget(wImpExp);
 	frow->addWidget(wMenu);
 
-
-	
 	// formurile
 	modifyForm->addRow(lName, eName);
 	modifyForm->addRow(lDest, eDest);
@@ -59,71 +56,61 @@ void Admin::exec()
 	modifyButtons->addWidget(getB);
 	modifyMenuT->addWidget(wModifyButtons);
 	frow->addWidget(wModifyMenu);
-	
+
 	//
 	statusBar->setSizeGripEnabled(false);
 	sound->setMedia(QUrl::fromLocalFile("ameno.mp3"));
 	sound->audioRole();
 	connects();
-	
+
 	all->show();
-
 }
-
 
 void Admin::connects()
 {
-		connect(addB, &QPushButton::clicked, [this]() {add(); });
-		connect(deleteB, &QPushButton::clicked, [this]() {del(); });
-		connect(changeB, &QPushButton::clicked, [this]() {change(); });
-		connect(l1, &QListWidget::itemSelectionChanged, [this]() {get(l1->currentItem()->text().toStdString()); });
-		connect(getB, &QPushButton::clicked, [this]() {get(eName->text().toStdString()); });
-		connect(sortCB, QOverload<int>::of(&QComboBox::activated), [=](int index) {switch (index)
-		{
-		case 1: sortByName(); sortCB->setCurrentIndex(0); break;
-		case 2: sortByDest(); sortCB->setCurrentIndex(0); break;
-		case 3: sortTypePrice(); sortCB->setCurrentIndex(0); break;
-			default:break;
-
-
-		}});
-		connect(filterCB, QOverload<int>::of(&QComboBox::activated), [=](int index) {switch (index)
-		{
-		case 1: filterByPrice(); filterCB->setCurrentIndex(0); break;
-		case 2: filterByDest(); filterCB->setCurrentIndex(0); break;
-		case 3: populateAll(); filterCB->setCurrentIndex(0); break;
-		default:break;
-
-
-		}});
-		connect(undoB, &QPushButton::clicked, [this]() {doUndo(); });
-		connect(exportHtmlB, &QPushButton::clicked, [this]() {toHtml(); QString link = "out.html";
-		QDesktopServices::openUrl(QUrl(link)); });
-		connect(importB, &QPushButton::clicked, [this]() {importFF(); });
-		connect(exportB, &QPushButton::clicked, [this]() {exportFF(); });
-		connect(shortcut, &QShortcut::activated, [this]() {  imgLabel->setVisible(true); sound->play(); });
-		connect(shortcut1, &QShortcut::activated, [this]() {imgLabel->setVisible(false); sound->pause(); });
+	connect(addB, &QPushButton::clicked, [this]() {add(); });
+	connect(deleteB, &QPushButton::clicked, [this]() {del(); });
+	connect(changeB, &QPushButton::clicked, [this]() {change(); });
+	connect(l1, &QListWidget::itemSelectionChanged, [this]() {get(l1->currentItem()->text().toStdString()); });
+	connect(getB, &QPushButton::clicked, [this]() {get(eName->text().toStdString()); });
+	connect(sortCB, QOverload<int>::of(&QComboBox::activated), [=](int index) {switch (index)
+	{
+	case 1: sortByName(); sortCB->setCurrentIndex(0); break;
+	case 2: sortByDest(); sortCB->setCurrentIndex(0); break;
+	case 3: sortTypePrice(); sortCB->setCurrentIndex(0); break;
+	default:break;
+	}});
+	connect(filterCB, QOverload<int>::of(&QComboBox::activated), [=](int index) {switch (index)
+	{
+	case 1: filterByPrice(); filterCB->setCurrentIndex(0); break;
+	case 2: filterByDest(); filterCB->setCurrentIndex(0); break;
+	case 3: populateAll(); filterCB->setCurrentIndex(0); break;
+	default:break;
+	}});
+	connect(undoB, &QPushButton::clicked, [this]() {doUndo(); });
+	connect(exportHtmlB, &QPushButton::clicked, [this]() {toHtml(); QString link = "out.html";
+	QDesktopServices::openUrl(QUrl(link)); });
+	connect(importB, &QPushButton::clicked, [this]() {importFF(); });
+	connect(exportB, &QPushButton::clicked, [this]() {exportFF(); });
+	connect(shortcut, &QShortcut::activated, [this]() {  imgLabel->setVisible(true); sound->play(); });
+	connect(shortcut1, &QShortcut::activated, [this]() {imgLabel->setVisible(false); sound->pause(); });
 }
 
-
-void Admin::populateFromVector(QListWidget& l,std::vector<Oferta>& v)
+void Admin::populateFromVector(QListWidget& l, std::vector<Oferta>& v)
 {
 	for (auto& el : v) {
 		std::string name = el.getName();
-		l.addItem(QString::fromStdString(name));	
+		l.addItem(QString::fromStdString(name));
 	}
 }
 
-
-
 void Admin::add()
 {
-
 	std::string name = eName->text().toStdString();
 	int iprice;
 	std::string dest = eDest->text().toStdString();
-	std::string type= eType->text().toStdString();
-	std::string price= ePrice->text().toStdString();
+	std::string type = eType->text().toStdString();
+	std::string price = ePrice->text().toStdString();
 	try {
 		iprice = std::stoi(price);
 		ctrl.add(name, dest, type, iprice);
@@ -135,8 +122,6 @@ void Admin::add()
 	catch (ValidateException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
 	catch (CtrlException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
 	catch (exception) { statusBar->showMessage("Invalid Price!"); };
-
-
 }
 void Admin::del() {
 	try {
@@ -149,12 +134,10 @@ void Admin::del() {
 		populateFromVector(*l1, v);
 
 		statusBar->showMessage("Offer deleted!");
-
 	}
 	catch (RepoException& e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
 	catch (ValidateException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
 	catch (CtrlException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); };
-
 }
 void Admin::get(std::string name) {
 	try {
@@ -168,7 +151,6 @@ void Admin::get(std::string name) {
 	catch (RepoException& e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
 	catch (ValidateException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); }
 	catch (CtrlException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); };
-
 }
 void Admin::sortByName() {
 	std::vector<Oferta> v;
@@ -191,9 +173,7 @@ void Admin::sortTypePrice() {
 	populateFromVector(*l1, v);
 	statusBar->showMessage("Sorted!");
 }
-void Admin::notify()
-{
-}
+
 void Admin::filterByDest() {
 	std::vector<Oferta> v;
 	std::string dest = filterEdit->text().toStdString();
@@ -201,12 +181,14 @@ void Admin::filterByDest() {
 	populateFromVector(*l1, v);
 	l1->clear();
 	populateFromVector(*l1, v);
-	if (v.size()==0)
+	if (v.size() == 0)
 		statusBar->showMessage("No Offers that have this destination!");
 	else
-	statusBar->showMessage("Filtered!");
+		statusBar->showMessage("Filtered!");
 	filterEdit->setText("");
-
+}
+void Admin::notify()
+{
 }
 void Admin::filterByPrice() {
 	std::vector<Oferta> v;
@@ -214,7 +196,7 @@ void Admin::filterByPrice() {
 	int iprice;
 	try {
 		iprice = stoi(price);
-		
+
 		ctrl.filtrarePret(iprice, v);
 		l1->clear();
 		populateFromVector(*l1, v);
@@ -223,20 +205,17 @@ void Admin::filterByPrice() {
 		else
 			statusBar->showMessage("Filtered!");
 	}
-		catch (exception) { statusBar->showMessage("You need a number to filter by Price!"); };
-		filterEdit->setText("");
-
+	catch (exception) { statusBar->showMessage("You need a number to filter by Price!"); };
+	filterEdit->setText("");
 }
 void Admin::populateAll() {
 	std::vector<Oferta> v;
 	ctrl.getAll(v);
 	l1->clear();
 	populateFromVector(*l1, v);
-
 }
 void Admin::doUndo() {
 	try {
-		
 		std::string st = ctrl.undo();
 		l1->clear();
 		populateAll();
@@ -244,27 +223,30 @@ void Admin::doUndo() {
 			l1->findItems(QString::fromStdString(st), Qt::MatchCaseSensitive).at(0)->setBackgroundColor(200);
 		statusBar->showMessage("Undo executed succesfully!");
 	}
-	catch (RepoException& e) { statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
-	populateAll();
+	catch (RepoException& e) {
+		statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+		populateAll();
 	}
-	catch (ValidateException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
-	populateAll();
+	catch (ValidateException&e) {
+		statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+		populateAll();
 	}
-	catch (CtrlException&e) { statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
-	populateAll();
+	catch (CtrlException&e) {
+		statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+		populateAll();
 	};
 }
 void Admin::toHtml() {
 	std::vector<Oferta> v;
 	ctrl.getAll(v);
 	ofstream g("out.html");
-	g<<"<!DOCTYPE HTML><html><table style = 'width:100%'><tr>";
+	g << "<!DOCTYPE HTML><html><table style = 'width:100%'><tr>";
 	g << "<th>Offer's name</th>";
 	g << "<th>Destination</th>";
 	g << "<th>Type</th>";
 	g << "<th>Price</th>";
 	for (auto& el : v) {
-		g<<"<tr>";
+		g << "<tr>";
 		g << "<td>" << el.getName() << "</td>";
 		g << "<td>" << el.getDestination() << "</td>";
 		g << "<td>" << el.getType() << "</td>";
@@ -276,15 +258,14 @@ void Admin::toHtml() {
 }
 void Admin::importFF() {
 	ifstream f("impExp.txt");
-	std::string name, dest, typ,price;
+	std::string name, dest, typ, price;
 	int iprice;
-		while (std::getline(f,name) , std::getline(f,dest), std::getline(f,typ), std::getline(f,price)) {
-			iprice = std::stoi(price);
-			ctrl.add(name, dest, typ, iprice);
-
-		}
+	while (std::getline(f, name), std::getline(f, dest), std::getline(f, typ), std::getline(f, price)) {
+		iprice = std::stoi(price);
+		ctrl.add(name, dest, typ, iprice);
+	}
 	populateAll();
-		statusBar->showMessage("Import executed succesfully!");
+	statusBar->showMessage("Import executed succesfully!");
 }
 void Admin::exportFF() {
 	ofstream g("impExp.txt");

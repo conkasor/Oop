@@ -3,7 +3,7 @@
 #include "Oferta.h"
 #include "repo.h"
 #include "Observer.h"
-class WishList:public Observable{
+class WishList :public Observable {
 private:
 	std::vector<Oferta> wishList;
 public:
@@ -25,4 +25,3 @@ public:
 	void addObserver(Observer* obs);
 	int size()noexcept;
 };
-

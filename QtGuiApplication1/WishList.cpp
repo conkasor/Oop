@@ -10,11 +10,8 @@ void WishList::EmptyWishList() {
 		std::vector<string> v;
 		auto temp = wishList.erase(wishList.begin());
 		v.push_back(of.getName());
-
-		
 	}
 	notifyObservers();
-	
 }
 //Adauga la wishList oferta primita ca parametru
 void WishList::AddToWishList(const Oferta& of) {
@@ -51,15 +48,13 @@ void WishList::ChangeWishListOffer(const Oferta& of) {
 }
 //Adauga TOATE elementele care au aceeasi destinatie cu destinatia primita ca parametru
 void WishList::AddWishListOffer(std::vector<Oferta> filtrat) {
-	
 	for (auto of : filtrat) {
 		wishList.emplace_back(of);
 		notifyObservers(of.getName());
 	}
-	
 }
 //Populeaza Wishlistul cu un nr. dat ca parametru de oferte random din repo;
-void WishList::RandomAddWishList(std::vector<Oferta> all,const unsigned int nr) {
+void WishList::RandomAddWishList(std::vector<Oferta> all, const unsigned int nr) {
 	std::mt19937 mt{ std::random_device{}() };
 	if (all.size() == 0)
 		throw CtrlException("Nu aveti nici o Oferta, va rog introduceti macar o oferta");
@@ -72,7 +67,6 @@ void WishList::RandomAddWishList(std::vector<Oferta> all,const unsigned int nr) 
 		wishList.push_back(el);
 		notifyObservers(el.getName());
 	}
-	
 }
 
 void WishList::getAll(std::vector<Oferta>& v) {
@@ -82,7 +76,6 @@ void WishList::getAll(std::vector<Oferta>& v) {
 void WishList::addObserver(Observer * obs)
 {
 	Observable::addObserver(obs);
-
 }
 int WishList::size()noexcept {
 	return wishList.size();

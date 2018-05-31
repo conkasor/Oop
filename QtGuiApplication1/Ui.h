@@ -1,4 +1,3 @@
-
 #pragma once
 #include <QApplication>
 #include <QPushButton>
@@ -28,12 +27,11 @@ class Ui
 	Admin admin;
 	std::vector<ViewWishList*>views;
 
-
 public:
-	Ui(Controller& ctrl) :ctrl{ ctrl }, admin { ctrl } {
+	Ui(Controller& ctrl) :ctrl{ ctrl }, admin{ ctrl } {
 		admin.importFF();
 	};
-	
+
 	void start();
 	void connects();
 };

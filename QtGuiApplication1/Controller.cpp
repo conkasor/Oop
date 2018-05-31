@@ -11,6 +11,12 @@
 #include "undo.h"
 #include "Observer.h"
 using namespace std;
+//adaugam observer
+void Controller::addObserverr(Observer * obs)
+{
+	addObserver(obs);
+}
+
 //adaugam nou obiect in repo la nivel controller daca sunt validate
 void Controller::add(const string & name, const string & dest, const string & tipe, int price)
 {
@@ -21,12 +27,44 @@ void Controller::add(const string & name, const string & dest, const string & ti
 	notifyObservers(name);
 }
 
+//sterge element dat prin intermediul numelui din repo la nivel controller
+void Controller::del(const string & name)
+{
+	Oferta of(name);
+	repo.delt3(of);
+
+	try {
+		while (1)
+			wishList.DeleteWishListOffer(of);
+	}
+	catch (CtrlException) {};
+	undoActions.push_back(std::make_unique<UndoSterge>(repo, of));
+	notifyObservers(name);
+}
+
+//modifica elementul din wishlist si repo la nivel controller
+void Controller::change(const string & name, const string & dest, const string & tipe, const int price)
+{
+	Oferta of(name, price, dest, tipe);
+	Oferta ofv;
+	ofv = repo.get(of);
+	val.validate(of);
+	repo.change(of);
+
+	try {
+		wishList.ChangeWishListOffer(of);
+	}
+	catch (CtrlException) {};
+	undoActions.push_back(std::make_unique<UndoChange>(repo, ofv));
+	notifyObservers(name);
+}
+
 std::string Controller::undo() {
 	if (undoActions.empty()) {
 		throw CtrlException{ "Nu mai exista operatii" };
 	}
 	int c = size();
-	std::string st=undoActions.back()->doUndo();
+	std::string st = undoActions.back()->doUndo();
 	//wishList.notifyObservers(st);
 	undoActions.pop_back();
 	notifyObservers(st);
@@ -40,54 +78,14 @@ std::string Controller::undo() {
 	}
 	wishList.notifyObservers(st);
 
-	
-
-	
 	return st;
 }
-
-
-//sterge element dat prin intermediul numelui din repo la nivel controller
-void Controller::del(const string & name)
-{
-	Oferta of(name);
-	repo.delt3(of);
-	
-	try{ 
-		while (1)
-			wishList.DeleteWishListOffer(of);
-
-	}
-	catch (CtrlException) {};
-	undoActions.push_back(std::make_unique<UndoSterge>(repo, of));
-	notifyObservers(name);
-
-}
-//modifica elementul din wishlist si repo la nivel controller
-void Controller::change(const string & name,const string & dest,const string & tipe,const int price)
-{
-	Oferta of(name, price, dest, tipe);
-	Oferta ofv;
-	ofv = repo.get(of);
-	val.validate(of);
-	repo.change(of);
-	
-	try {
-		wishList.ChangeWishListOffer(of);
-
-	}
-	catch (CtrlException) {};
-	undoActions.push_back(std::make_unique<UndoChange>(repo, ofv));
-	notifyObservers(name);
-
-}
-
-//filtreaza destinatie 
+//filtreaza destinatie
 void Controller::filtrareDest(const string & dest, std::vector<Oferta>& rez)const
 {
 	filter([dest](const Oferta& of) noexcept {
 		return of.getDestination() == dest;
-	},rez);
+	}, rez);
 }
 //filtrare generica
 void Controller::filter(function<bool(const Oferta&)> fct, std::vector<Oferta>& rez) const
@@ -98,18 +96,17 @@ void Controller::filter(function<bool(const Oferta&)> fct, std::vector<Oferta>& 
 }
 
 //filtrare dupa Pet
-void Controller::filtrarePret(const int pret,std::vector<Oferta>& rez) const
+void Controller::filtrarePret(const int pret, std::vector<Oferta>& rez) const
 {
 	filter([pret](const Oferta& of) noexcept {
 		return of.getPrice() <= pret;
 	}, rez);
 }
-//functie generala de sortare 
-void Controller::sorting(function<bool(const Oferta&,const Oferta&)> fct, std::vector<Oferta>& rez)
+//functie generala de sortare
+void Controller::sorting(function<bool(const Oferta&, const Oferta&)> fct, std::vector<Oferta>& rez)
 {
 	repo.getAll(rez);
-	sort(rez.begin(),rez.end(),fct);
-	
+	sort(rez.begin(), rez.end(), fct);
 }
 //sorteaza dupa nume
 void Controller::sortNume(std::vector<Oferta>& rez)
@@ -151,7 +148,7 @@ Oferta Controller::get(const string &name)const
 	throw CtrlException("Nu exista aceasta oferta");
 }
 //Returneaza dimensiunea repositoryului
-int Controller::size()const noexcept{
+int Controller::size()const noexcept {
 	return repo.size();
 }
 
@@ -159,26 +156,10 @@ void Controller::addWishObserver(Observer* obs)
 {
 	wishList.addObserver(obs);
 }
-
-void Controller::addObserverr(Observer * obs)
-{
-	addObserver(obs);
-}
-
-
-
-
-
-
-
-
-
 ostream& operator<<(ostream& out, const CtrlException& ex) {
 	out << ex.msg;
 	return out;
 }
-
-
 
 void testController() {
 	Repo rep;
@@ -207,7 +188,7 @@ void testController() {
 	string d = "fkfk";
 	string t = "dkkf";
 	ctr.get("Dicky4");
-	ctr.change(name, d,t, 20);
+	ctr.change(name, d, t, 20);
 	ctr.del(name);
 	ctr.undo();
 	std::vector <Oferta> rez4;

@@ -26,11 +26,10 @@ void ClientMenu::exec()
 	srow->addWidget(exportToHtml);
 	trow->insertStretch(0, 0);
 	trow->addWidget(slider);
-	trow->insertStretch(2,0);
+	trow->insertStretch(2, 0);
 	slider->setOrientation(Qt::Horizontal);
 	slider->setRange(1, ctrl.size());
-	qDebug ()<< ctrl.size();
-	
+	qDebug() << ctrl.size();
 
 	status->addWidget(statusLabel);
 	all->addWidget(wstatus);
@@ -47,23 +46,20 @@ void ClientMenu::exec()
 
 void ClientMenu::connects()
 {
-	connect (slider,&QSlider::valueChanged,[this](){
+	connect(slider, &QSlider::valueChanged, [this]() {
 		QString str = "Generate ";
-		
+
 		str += QString::number(slider->value());
 		generateB->setText(str); });
 
-
-	connect(l2,&QListWidget::doubleClicked,[this](){
+	connect(l2, &QListWidget::doubleClicked, [this]() {
 		Oferta& of = ctrl.get(l2->currentItem()->text().toStdString());
-		add(of,l1);
+		add(of, l1);
 		ctrl.wishList.AddToWishList(of);
 		update(of.getName());
 		notifyObservers(of.getName());
-
-
 	});
-	connect(wantB,&QPushButton::clicked,[this](){
+	connect(wantB, &QPushButton::clicked, [this]() {
 		try {
 			if (!l2->currentItem())
 				throw(CtrlException("Nu ati selectat oferta pe care sa o adaugati in wishlist"));
@@ -72,12 +68,9 @@ void ClientMenu::connects()
 			ctrl.wishList.AddToWishList(of);
 			update(of.getName());
 			notifyObservers(of.getName());
-
-
 		}
 		catch (CtrlException& e) {
 			statusLabel->setText(QString::fromStdString(e.msg));
-
 		};
 	});
 	connect(dWantB, &QPushButton::clicked, [this]() {
@@ -92,10 +85,6 @@ void ClientMenu::connects()
 			populateFromVector(l1, v);
 			update(of.getName());
 			notifyObservers(of.getName());
-
-
-			
-
 		}
 		catch (CtrlException& e) {
 			statusLabel->setText(QString::fromStdString(e.msg));
@@ -104,36 +93,29 @@ void ClientMenu::connects()
 	});
 	connect(l1, &QListWidget::doubleClicked, [this]() {
 		try {
-		Oferta& of = ctrl.get(l1->currentItem()->text().toStdString());
-		ctrl.wishList.DeleteWishListOffer(of);
-		std::vector<Oferta> v;
-		ctrl.wishList.getAll(v);
-		update(of.getName());
-		notifyObservers(of.getName());
-
-
+			Oferta& of = ctrl.get(l1->currentItem()->text().toStdString());
+			ctrl.wishList.DeleteWishListOffer(of);
+			std::vector<Oferta> v;
+			ctrl.wishList.getAll(v);
+			update(of.getName());
+			notifyObservers(of.getName());
 		}
 		catch (CtrlException& e) {
 			statusLabel->setText(QString::fromStdString(e.msg));
 		}
 		catch (exception) {};
-
 	});
 	connect(generateB, &QPushButton::clicked, [this]() {
 		generate();
 		currentNrLabel->setText(QString::number(ctrl.wishList.size()));
 		update();
-
-
 	});
 	connect(delAll, &QPushButton::clicked, [this]() {
-		if (ctrl.wishList.size()==0)
+		if (ctrl.wishList.size() == 0)
 			statusLabel->setText("Deja Gol");
 		else {
 			deleteAll();
 			notifyObservers();
-
-		
 		}});
 	connect(exportToHtml, &QPushButton::clicked, [this]() {exportHtml(); QString link = "outwish.html";
 	QDesktopServices::openUrl(QUrl(link)); });
@@ -143,18 +125,17 @@ void ClientMenu::populateFromVector(QListWidget* l, std::vector<Oferta>& v)
 {
 	l->clear();
 	for (auto& el : v) {
-		add(el,l);
+		add(el, l);
 	}
 }
-void ClientMenu::add(Oferta& of,QListWidget* l1) {
+void ClientMenu::add(Oferta& of, QListWidget* l1) {
 	QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(of.getName()));
 	QString dest = QString::fromStdString(of.getDestination());
 	QString type = QString::fromStdString(of.getType());
 	QString price = QString::number(of.getPrice());
-	dest +=", "+ type + ", " + price;
+	dest += ", " + type + ", " + price;
 	item->setToolTip(dest);
 	l1->addItem(item);
-
 }
 void ClientMenu::generate() {
 	std::vector<Oferta> v;
@@ -197,16 +178,15 @@ void ClientMenu::update(std::string name)
 	populateFromVector(l1, v);
 	v.clear();
 	ctrl.getAll(v);
-	populateFromVector(l2,v);
+	populateFromVector(l2, v);
 	currentNrLabel->setText(QString::number(ctrl.wishList.size()));
 	slider->setRange(1, ctrl.size());
 	notifyViewOnly(name);
-	
 }
 
 void ClientMenu::notifyViewOnly(std::string name)
 {
-	for (auto el:observers) {
+	for (auto el : observers) {
 		if (typeid(this) != typeid(el))
 			el->update(name);
 	}

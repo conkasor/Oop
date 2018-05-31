@@ -10,22 +10,22 @@
 #include "WishList.h"
 #include "Observer.h"
 using namespace std;
-class Controller:public Observable
+class Controller :public Observable
 {
 	Repo& repo;
 	ValidatorOferte& val;
 	std::vector<unique_ptr<ActiuneUndo>> undoActions;
-	
+
 public:
-	
+
 	WishList & wishList;
 	Controller(Repo& rep, ValidatorOferte& val, WishList& wishList) noexcept : repo{ rep }, val{ val }, wishList{ wishList } {
 	}
-	
+
 	void add(const string & name, const string & dest, const string & tipe, int price);
 	std::string undo();
 	void del(const string& name);
-	void change(const string& name,const string& dest,const string& tipe,const int price);
+	void change(const string& name, const string& dest, const string& tipe, const int price);
 	void print() {
 		repo.afisare();
 	}
@@ -41,9 +41,6 @@ public:
 	int size()const noexcept;
 	void addWishObserver(Observer* obs);
 	void addObserverr(Observer* obs);
-
-
-
 };
 class CtrlException {
 public:
@@ -57,4 +54,3 @@ public:
 ostream& operator<<(ostream& out, const CtrlException& ex);
 
 void testController();
-

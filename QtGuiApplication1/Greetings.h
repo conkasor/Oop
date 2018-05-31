@@ -13,10 +13,9 @@
 #include <QListWidget>
 #include "Controller.h"
 
-
-class Welcome:public QWidget {
+class Welcome :public QWidget {
 	QFormLayout *fl = new QFormLayout(this);
-	
+
 public:
 	QPushButton * clientMenu = new QPushButton("Client");
 	QPushButton *adminMenu = new QPushButton("Admin");

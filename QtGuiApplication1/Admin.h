@@ -28,13 +28,10 @@
 #include "Observer.h"
 #include "clientMenu.h"
 
-class Admin:public QMainWindow
-{	Q_OBJECT;
+class Admin :public QMainWindow
+{
+	Q_OBJECT;
 	Controller& ctrl;
-	
-	
-	
-	
 
 public:
 	Admin(Controller& ctrl) :ctrl{ ctrl } {
@@ -61,7 +58,7 @@ public:
 	QHBoxLayout* modifyButtons = new QHBoxLayout(wModifyButtons);
 	QVBoxLayout* modifyMenuT = new QVBoxLayout(wModifyMenu);
 	///
-	
+
 	QWidget* wMenu = new QWidget();
 	QWidget* wButtons = new QWidget();
 	QWidget* wImpExp = new QWidget();
@@ -70,12 +67,11 @@ public:
 	QHBoxLayout* buttons = new QHBoxLayout(wButtons);
 	QHBoxLayout* frow = new QHBoxLayout(all);
 	QHBoxLayout* impExp = new QHBoxLayout(wImpExp);
-	QPushButton* importB= new QPushButton("Import");
+	QPushButton* importB = new QPushButton("Import");
 	QPushButton* exportB = new QPushButton("Export", wImpExp);
 	QFormLayout* formFile = new QFormLayout(wFileForm);
 	QLineEdit* fileEdit = new QLineEdit();
 	QLabel*	fileLabel = new QLabel();
-
 
 	//general
 	QListWidget * l1 = new QListWidget();
@@ -87,9 +83,8 @@ public:
 	QPushButton* undoB = new QPushButton("Undo", wButtons);
 	QPushButton* exportHtmlB = new QPushButton("Export to Html", wButtons);
 
-
 	//
-	
+
 	//
 	QLabel *lName = new QLabel("Name:", wModifyForm);
 	QLineEdit* eName = new QLineEdit(wModifyForm);
@@ -104,7 +99,6 @@ public:
 	QPushButton* changeB = new QPushButton("change", wModifyButtons);
 	QPushButton* getB = new QPushButton("find", wModifyButtons);
 	QStatusBar * statusBar = new QStatusBar(all);
-	
 
 	void exec();
 	void connects();
@@ -113,7 +107,6 @@ public:
 
 	void del();
 
-	
 	void change() {
 		std::string name = eName->text().toStdString();
 		int iprice;
@@ -139,9 +132,9 @@ public:
 	void sortByDest();
 
 	void sortTypePrice();
-	
+
 	void notify();
-	
+
 	void filterByDest();
 
 	void filterByPrice();
@@ -155,9 +148,4 @@ public:
 	void importFF();
 
 	void exportFF();
-
-
-
-
-
 };

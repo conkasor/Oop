@@ -20,18 +20,14 @@ void f(QWidget* w) {
 	w->show();
 }
 
-
-
 int main(int argc, char *argv[])
-{	
+{
 	QApplication app(argc, argv);
 	Repo rep;
 	ValidatorOferte val;
 	WishList wish;
-	Controller ctr(rep, val,wish);
+	Controller ctr(rep, val, wish);
 	Ui ui(ctr);
 	ui.start();
 	return app.exec();
-
 }
- 
