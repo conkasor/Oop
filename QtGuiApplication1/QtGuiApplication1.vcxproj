@@ -113,8 +113,6 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\repoo.cpp" />
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.cpp" />
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="clientMenu.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -124,7 +122,9 @@
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Oferta.cpp" />
     <ClCompile Include="QtGuiApplication1.cpp" />
+    <ClCompile Include="repoo.cpp" />
     <ClCompile Include="Ui.cpp" />
+    <ClCompile Include="ValidatorOferte.cpp" />
     <ClCompile Include="ViewWishList.cpp" />
     <ClCompile Include="WishList.cpp" />
   </ItemGroup>
@@ -138,12 +138,17 @@
     <QtRcc Include="QtGuiApplication1.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Oferta.h" />
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\repo.h" />
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="Model.h" />
+    <QtMoc Include="Model.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <ClInclude Include="Oferta.h" />
+    <ClInclude Include="repo.h" />
     <ClInclude Include="undo.h" />
+    <ClInclude Include="ValidatorOferte.h" />
     <ClInclude Include="ViewWishList.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB</Define>

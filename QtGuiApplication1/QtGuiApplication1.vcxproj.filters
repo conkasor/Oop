@@ -60,12 +60,6 @@
     <ClCompile Include="Ui.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\repoo.cpp">
-      <Filter>Source Files\app</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.cpp">
-      <Filter>Source Files\app</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files\app</Filter>
     </ClCompile>
@@ -83,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="repoo.cpp">
+      <Filter>Source Files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="ValidatorOferte.cpp">
+      <Filter>Source Files\app</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -105,15 +105,6 @@
     <ClInclude Include="Ui.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\Oferta.h">
-      <Filter>Header Files\app</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\repo.h">
-      <Filter>Header Files\app</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Proj 3 oop\Proj 3 oop\ValidatorOferte.h">
-      <Filter>Header Files\app</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -132,8 +123,14 @@
     <ClInclude Include="Controller.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files\GUI</Filter>
+    <ClInclude Include="Oferta.h">
+      <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="repo.h">
+      <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="ValidatorOferte.h">
+      <Filter>Header Files\app</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +138,9 @@
       <Filter>Header Files\GUI</Filter>
     </QtMoc>
     <QtMoc Include="Admin.h">
+      <Filter>Header Files\GUI</Filter>
+    </QtMoc>
+    <QtMoc Include="Model.h">
       <Filter>Header Files\GUI</Filter>
     </QtMoc>
   </ItemGroup>

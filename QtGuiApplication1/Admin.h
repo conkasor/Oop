@@ -74,7 +74,8 @@ public:
 	QLabel*	fileLabel = new QLabel();
 
 	//general
-	QListWidget * l1 = new QListWidget();
+	QListView * l1 = new QListView();
+	
 	QWidget* wFilterForm = new QWidget();
 	QComboBox* sortCB = new QComboBox(wButtons);
 	QComboBox* filterCB = new QComboBox(wButtons);
@@ -102,7 +103,7 @@ public:
 
 	void exec();
 	void connects();
-	void populateFromVector(QListWidget& l, std::vector<Oferta>& v);
+	void populateFromVector(QListView& l, std::vector<Oferta>& v);
 	void add();
 
 	void del();

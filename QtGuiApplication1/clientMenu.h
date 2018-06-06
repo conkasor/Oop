@@ -33,8 +33,8 @@ class ClientMenu : public QWidget, public Observer, public Observable
 	QHBoxLayout *srow = new QHBoxLayout(wsrow);
 	QVBoxLayout *all = new QVBoxLayout(client);
 	QVBoxLayout *btns = new QVBoxLayout(wbtns);
-	QListWidget *l1 = new QListWidget(wfrow);
-	QListWidget *l2 = new QListWidget(wfrow);
+	QListView * l1 = new QListView(wfrow);
+	QListView * l2 = new QListView(wfrow);
 	QHBoxLayout* trow = new QHBoxLayout(wtrow);
 
 public:
@@ -47,12 +47,11 @@ public:
 	QPushButton *delAll = new QPushButton("DelAll", wsrow);
 	QPushButton *generateB = new QPushButton("Generate 1", wsrow);
 	QPushButton *exportToHtml = new QPushButton("Export Html", wsrow);
-
 	void exit();
 	void exec();
 	void connects();
-	void populateFromVector(QListWidget * l, std::vector<Oferta>& v);
-	void add(Oferta & of, QListWidget * l1);
+	void populateFromVector(QListView & l, std::vector<Oferta>& v);
+	void add(Oferta & of, QListView * l1);
 	void generate();
 	void deleteAll();
 	void exportHtml();

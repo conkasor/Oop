@@ -40,7 +40,7 @@ void ClientMenu::exec()
 	//populate all
 	std::vector<Oferta> v;
 	ctrl.getAll(v);
-	populateFromVector(l2, v);
+	populateFromVector(*l2, v);
 	client->show();
 }
 
@@ -52,20 +52,45 @@ void ClientMenu::connects()
 		str += QString::number(slider->value());
 		generateB->setText(str); });
 
-	connect(l2, &QListWidget::doubleClicked, [this]() {
-		Oferta& of = ctrl.get(l2->currentItem()->text().toStdString());
+	connect(l2, &QListView::doubleClicked, [this]() {
+		QModelIndex index = l2->currentIndex();
+		string itemText = index.data(Qt::DisplayRole).toString().toStdString();
+		Oferta& of = ctrl.get(itemText);
 		add(of, l1);
 		ctrl.wishList.AddToWishList(of);
 		update(of.getName());
 		notifyObservers(of.getName());
 	});
 	connect(wantB, &QPushButton::clicked, [this]() {
+		Oferta of;
+		string itemText;
 		try {
-			if (!l2->currentItem())
-				throw(CtrlException("Nu ati selectat oferta pe care sa o adaugati in wishlist"));
-			Oferta& of = ctrl.get(l2->currentItem()->text().toStdString());
-			add(of, l1);
-			ctrl.wishList.AddToWishList(of);
+			QModelIndex index = l2->currentIndex();
+			itemText = index.data(Qt::DisplayRole).toString().toStdString();
+			 of= ctrl.get(itemText);
+			 Oferta& of = ctrl.get(itemText);
+			 add(of, l1);
+			 ctrl.wishList.AddToWishList(of);
+			 update(of.getName());
+			 notifyObservers(of.getName());
+		}	
+		catch (CtrlException& e) {
+			statusLabel->setText(QString::fromStdString(e.msg));
+		};
+			
+	});
+	connect(dWantB, &QPushButton::clicked, [this]() {
+		Oferta of1;
+		string itemText;
+		try {
+			QModelIndex index = l1->currentIndex();
+			itemText = index.data(Qt::DisplayRole).toString().toStdString();
+			of1 = ctrl.get(itemText);
+			Oferta& of = ctrl.get(itemText);
+			ctrl.wishList.DeleteWishListOffer(of);
+			std::vector<Oferta> v;
+			ctrl.wishList.getAll(v);
+			populateFromVector(*l1, v);
 			update(of.getName());
 			notifyObservers(of.getName());
 		}
@@ -73,27 +98,14 @@ void ClientMenu::connects()
 			statusLabel->setText(QString::fromStdString(e.msg));
 		};
 	});
-	connect(dWantB, &QPushButton::clicked, [this]() {
+	connect(l1, &QListView::doubleClicked, [this]() {
+		Oferta of1;
+		string itemText;
 		try {
-			if (!l1->currentItem())
-				throw(CtrlException("Nu ati selectat Offer wishlist"));
-			Oferta& of = ctrl.get(l1->currentItem()->text().toStdString());
-			ctrl.wishList.DeleteWishListOffer(of);
-			l1->clear();
-			std::vector<Oferta> v;
-			ctrl.wishList.getAll(v);
-			populateFromVector(l1, v);
-			update(of.getName());
-			notifyObservers(of.getName());
-		}
-		catch (CtrlException& e) {
-			statusLabel->setText(QString::fromStdString(e.msg));
-		}
-		catch (exception) {};
-	});
-	connect(l1, &QListWidget::doubleClicked, [this]() {
-		try {
-			Oferta& of = ctrl.get(l1->currentItem()->text().toStdString());
+			QModelIndex index = l1->currentIndex();
+			itemText = index.data(Qt::DisplayRole).toString().toStdString();
+			of1 = ctrl.get(itemText);
+			Oferta& of = of1;
 			ctrl.wishList.DeleteWishListOffer(of);
 			std::vector<Oferta> v;
 			ctrl.wishList.getAll(v);
@@ -121,21 +133,21 @@ void ClientMenu::connects()
 	QDesktopServices::openUrl(QUrl(link)); });
 }
 
-void ClientMenu::populateFromVector(QListWidget* l, std::vector<Oferta>& v)
+void ClientMenu::populateFromVector(QListView &l, std::vector<Oferta>& v)
 {
-	l->clear();
+	
+	QStringList list;
+
 	for (auto& el : v) {
-		add(el, l);
+		std::string name = el.getName();
+		list.append(QString::fromStdString(name));
 	}
+	QAbstractItemModel *model = new Model(list);
+	l.setModel(model);
 }
-void ClientMenu::add(Oferta& of, QListWidget* l1) {
-	QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(of.getName()));
-	QString dest = QString::fromStdString(of.getDestination());
-	QString type = QString::fromStdString(of.getType());
-	QString price = QString::number(of.getPrice());
-	dest += ", " + type + ", " + price;
-	item->setToolTip(dest);
-	l1->addItem(item);
+void ClientMenu::add(Oferta& of, QListView* l1) {
+	QStringList list1;
+	list1.append(QString::fromStdString(of.getName()));
 }
 void ClientMenu::generate() {
 	std::vector<Oferta> v;
@@ -144,7 +156,6 @@ void ClientMenu::generate() {
 	update();
 }
 void ClientMenu::deleteAll() {
-	l1->clear();
 	ctrl.wishList.EmptyWishList();
 	update();
 }
@@ -175,10 +186,10 @@ void ClientMenu::update(std::string name)
 {
 	std::vector<Oferta> v;
 	ctrl.wishList.getAll(v);
-	populateFromVector(l1, v);
+	populateFromVector(*l1, v);
 	v.clear();
 	ctrl.getAll(v);
-	populateFromVector(l2, v);
+	populateFromVector(*l2, v);
 	currentNrLabel->setText(QString::number(ctrl.wishList.size()));
 	slider->setRange(1, ctrl.size());
 	notifyViewOnly(name);

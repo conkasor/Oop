@@ -12,14 +12,17 @@
 #include <qmenubar.h>
 #include <qstyle.h>
 #include <qpixmap.h>
+#include <qabstractitemview.h>
 #include <qimage.h>
 #include <qshortcut.h>
 #include <qkeysequence.h>
 #include <qsound.h>
+#include "Model.h"
 
 void Admin::exec()
 {
 	//general menu
+
 	menu->addWidget(statusBar);
 	menu->addWidget(l1);
 	buttons->addWidget(sortCB);
@@ -63,6 +66,9 @@ void Admin::exec()
 	sound->audioRole();
 	connects();
 
+
+	l1->setSelectionMode(QAbstractItemView::SingleSelection);
+
 	all->show();
 }
 
@@ -71,7 +77,8 @@ void Admin::connects()
 	connect(addB, &QPushButton::clicked, [this]() {add(); });
 	connect(deleteB, &QPushButton::clicked, [this]() {del(); });
 	connect(changeB, &QPushButton::clicked, [this]() {change(); });
-	connect(l1, &QListWidget::itemSelectionChanged, [this]() {get(l1->currentItem()->text().toStdString()); });
+	connect(l1, &QAbstractItemView::clicked, [this]() {QModelIndex index = l1->currentIndex();
+	string itemText = index.data(Qt::DisplayRole).toString().toStdString(); get(itemText); });
 	connect(getB, &QPushButton::clicked, [this]() {get(eName->text().toStdString()); });
 	connect(sortCB, QOverload<int>::of(&QComboBox::activated), [=](int index) {switch (index)
 	{
@@ -96,12 +103,15 @@ void Admin::connects()
 	connect(shortcut1, &QShortcut::activated, [this]() {imgLabel->setVisible(false); sound->pause(); });
 }
 
-void Admin::populateFromVector(QListWidget& l, std::vector<Oferta>& v)
-{
+void Admin::populateFromVector(QListView& l, std::vector<Oferta>& v)
+{	QStringList list;
+
 	for (auto& el : v) {
 		std::string name = el.getName();
-		l.addItem(QString::fromStdString(name));
+		list.append(QString::fromStdString(name));
 	}
+	QAbstractItemModel *model = new Model(list);
+	l.setModel(model);
 }
 
 void Admin::add()
@@ -114,7 +124,6 @@ void Admin::add()
 	try {
 		iprice = std::stoi(price);
 		ctrl.add(name, dest, type, iprice);
-		l1->clear();
 		populateAll();
 		statusBar->showMessage("Offer added!");
 	}
@@ -128,7 +137,7 @@ void Admin::del() {
 		std::string name = eName->text().toStdString();
 		qDebug() << eName->text();
 		ctrl.del(name);
-		l1->clear();
+		//l1->clear();
 		std::vector<Oferta> v;
 		ctrl.getAll(v);
 		populateFromVector(*l1, v);
@@ -155,21 +164,21 @@ void Admin::get(std::string name) {
 void Admin::sortByName() {
 	std::vector<Oferta> v;
 	ctrl.sortNume(v);
-	l1->clear();
+	//l1->clear();
 	populateFromVector(*l1, v);
 	statusBar->showMessage("Sorted!");
 }
 void Admin::sortByDest() {
 	std::vector<Oferta> v;
 	ctrl.sortDest(v);
-	l1->clear();
+	//l1->clear();
 	populateFromVector(*l1, v);
 	statusBar->showMessage("Sorted!");
 }
 void Admin::sortTypePrice() {
 	std::vector<Oferta> v;
 	ctrl.sortTipPret(v);
-	l1->clear();
+	//l1->clear();
 	populateFromVector(*l1, v);
 	statusBar->showMessage("Sorted!");
 }
@@ -179,7 +188,7 @@ void Admin::filterByDest() {
 	std::string dest = filterEdit->text().toStdString();
 	ctrl.filtrareDest(dest, v);
 	populateFromVector(*l1, v);
-	l1->clear();
+	//l1->clear();
 	populateFromVector(*l1, v);
 	if (v.size() == 0)
 		statusBar->showMessage("No Offers that have this destination!");
@@ -198,7 +207,7 @@ void Admin::filterByPrice() {
 		iprice = stoi(price);
 
 		ctrl.filtrarePret(iprice, v);
-		l1->clear();
+		//l1->clear();
 		populateFromVector(*l1, v);
 		if (v.size() == 0)
 			statusBar->showMessage("No Offers that have this destination!");
@@ -211,30 +220,26 @@ void Admin::filterByPrice() {
 void Admin::populateAll() {
 	std::vector<Oferta> v;
 	ctrl.getAll(v);
-	l1->clear();
 	populateFromVector(*l1, v);
 }
 void Admin::doUndo() {
 	try {
 		std::string st = ctrl.undo();
-		l1->clear();
 		populateAll();
-		if (!l1->findItems(QString::fromStdString(st), Qt::MatchCaseSensitive).isEmpty())
-			l1->findItems(QString::fromStdString(st), Qt::MatchCaseSensitive).at(0)->setBackgroundColor(200);
 		statusBar->showMessage("Undo executed succesfully!");
 	}
 	catch (RepoException& e) {
-		statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+		statusBar->showMessage(QString::fromStdString(e.msg));
 		populateAll();
 	}
 	catch (ValidateException&e) {
-		statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
+		statusBar->showMessage(QString::fromStdString(e.msg));
 		populateAll();
 	}
-	catch (CtrlException&e) {
-		statusBar->showMessage(QString::fromStdString(e.msg)); l1->clear();
-		populateAll();
-	};
+catch (CtrlException&e) {
+statusBar->showMessage(QString::fromStdString(e.msg));
+populateAll();
+};
 }
 void Admin::toHtml() {
 	std::vector<Oferta> v;
